@@ -7,15 +7,15 @@
     <title>acb's synonyms</title>
 
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
-    <script src="scripts/waterfall.min.js"></script>
     <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script src="scripts/keys.js"></script>
     <script>
 
     </script>
     <script>
       // Initialize Firebase
       var config = {
-        apiKey: "",
+        apiKey: FIREBASE_KEY,
         authDomain: "synonym-anlcan.firebaseapp.com",
         databaseURL: "https://synonym-anlcan.firebaseio.com",
         projectId: "synonym-anlcan",
@@ -76,7 +76,6 @@
     $article.className = "grid-item";
     $article.append(createTable(selection));
     userListUI.append($article);
-    //waterfall('.grid');
 
     var container = document.querySelector('#grid');
     var pckry = new Packery(container, {
