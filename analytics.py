@@ -5,7 +5,9 @@ from sys import argv
 
 from requests import post
 
-WEB_API_KEY = ""
+from dotenv import load_dotenv
+load_dotenv()
+
 logger = logging.getLogger("synonym")
 logger.addHandler(SysLogHandler())
 logger.addHandler(RotatingFileHandler(filename="/Users/anlcan/projects/anlcan/synonyms/syn.log", mode='a', ))

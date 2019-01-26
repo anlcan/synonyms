@@ -2,12 +2,11 @@ from sys import argv
 
 from requests import get
 
-KEY = ""
 HOST = "http://words.bighugelabs.com/api/2/"
 
 
 def run(input):
-    URL = HOST + "/".join([KEY, input, "json"])
+    URL = HOST + "/".join([BIGHUGELABS_KEY, input, "json"])
     response = get(URL)
     if response.status_code != 200:
         return
