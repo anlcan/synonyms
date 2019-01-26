@@ -1,12 +1,15 @@
+from os import getenv
 from sys import argv
 
+from dotenv import load_dotenv
 from requests import get
 
+load_dotenv()
 HOST = "http://words.bighugelabs.com/api/2/"
 
 
 def run(input):
-    URL = HOST + "/".join([BIGHUGELABS_KEY, input, "json"])
+    URL = HOST + "/".join([getenv("BIGHUGELABS_KEY"), input, "json"])
     response = get(URL)
     if response.status_code != 200:
         return
