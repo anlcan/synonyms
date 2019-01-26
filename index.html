@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>acb's synonyms</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+    <script src="scripts/waterfall.min.js"></script>
+    <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+    <script>
+
+    </script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "",
+        authDomain: "synonym-anlcan.firebaseapp.com",
+        databaseURL: "https://synonym-anlcan.firebaseio.com",
+        projectId: "synonym-anlcan",
+        storageBucket: "synonym-anlcan.appspot.com",
+        messagingSenderId: "100214144747"
+      };
+      firebase.initializeApp(config);
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: darkgray;
+            padding: 10px 10px 10px 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .grid-item {
+            width: 10%;
+            border-radius: 10px;
+            background: darkseagreen;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .grid-item--width2 {
+            width: 50%;
+        }
+
+        .header {
+            font-weight:bold;
+        }
+        .selected {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="grid" id="grid">
+
+</div>
+<script>
+
+
+  // vanilla JS
+
+
+  const dbRef = firebase.database().ref();
+  const usersRef = dbRef.child('selection');
+  //Get User List using Child_Added() method:
+  const userListUI = document.getElementById("grid");
+
+  usersRef.on("child_added", snap => {
+    let selection = snap.val();
+    console.log(selection);
+
+    let $article = document.createElement("div");
+    $article.className = "grid-item";
+    $article.append(createTable(selection));
+    userListUI.append($article);
+    //waterfall('.grid');
+
+    var container = document.querySelector('#grid');
+    var pckry = new Packery(container, {
+      // options...
+      itemSelector: '.grid-item',
+      gutter: 10
+    });
+
+  });
+
+  function createTable(selection) {
+    let table = document.createElement('table');
+    let tableBody = document.createElement('tbody');
+
+    tableBody.appendChild(createRow(selection.text, 'header'));
+
+    selection.syn.forEach(function (rowData) {
+      let className = (rowData === selection.selected)? "selected" : "synonym";
+      tableBody.appendChild(createRow(rowData, className));
+    });
+
+    table.appendChild(tableBody);
+
+    return table;
+  }
+
+  function createRow(rowData, classname) {
+    let row = document.createElement('tr');
+    let cell = document.createElement('td');
+    cell.className = classname;
+    let txt = document.createTextNode(rowData);
+    cell.appendChild(txt);
+
+
+    row.appendChild(cell);
+
+    return row;
+
+  }
+
+
+</script>
+
+
+</body>
+</html>

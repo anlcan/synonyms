@@ -1,0 +1,17 @@
+on run {input, parameters}
+	set txt to do shell script "python /Users/anlcan/projects/anlcan/synonyms/synonym.py " & input
+	if txt is equal to "" then
+		return
+	end if
+	set AppleScript's text item delimiters to "\\r"
+	set syn_list to words of txt
+	set selected to choose from list syn_list with prompt "synonym for " & space & input without multiple selections allowed
+	if selected is false then
+		return
+	end if
+
+	set txt_syn_list to syn_list as text
+	do shell script "python /Users/anlcan/projects/anlcan/synonyms/analytics.py " & quoted form of (input as text) & space & quoted form of (selected as text) & space & quoted form of (syn_list as text)
+	return selected as text
+
+end run
